@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo "CodeBuild triggered by a push to master at $(date)"
+      - docker version
+  build:
+    commands:
+      - echo "Building custom Docker image from Dockerfile"
+      - docker build -t capstone2-webapp:$CODEBUILD_BUILD_NUMBER .
+  post_build:
+    commands:
+      - echo "Docker build finished at $(date)"
+
+artifacts:
+  files:
+    - Dockerfile
+    - index.html
